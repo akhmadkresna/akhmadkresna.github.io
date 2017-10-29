@@ -1,8 +1,16 @@
 ---
+title: 'Odoo : Add custom field'
+date: 2017-10-28 00:00:00 Z
+tags:
+- web
+- odoo
+- custom
+- module
+- open source
+- python
+- framework
 layout: post
-title: "Odoo : Add custom field"
-description: "Create odoo custom module for add a field on certain odoo backend interface."
-tags: [web, odoo, custom, module, open source, python, framework]
+description: Create odoo custom module for add a field on certain odoo backend interface.
 ---
 
 Before you develop anything make sure you enable `odoo developer mode` from setting menu top right corner choose about. About wizard will pop-up and then you click `activate developer mode` in the top right corner. Odoo Developer mode help you to get what name of view/object you want to inherit to use that name on your code.

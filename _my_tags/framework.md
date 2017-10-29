@@ -1,4 +1,5 @@
 ---
-slug: framework
+title: Framework
 name: framework
 ---
+
