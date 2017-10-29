@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Notes | Odoo : Add custom field</title>
+  <meta name="description" content="Create odoo custom module for add a field on certain odoo backend interface.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Odoo : Add custom field">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/posts/odoo-custom-field">
+  <meta property="og:description" content="Create odoo custom module for add a field on certain odoo backend interface.">
+  <meta property="og:site_name" content="Notes">
+  <meta property="og:image" content="http://localhost:4000/assets/og-image.jpg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="http://localhost:4000/posts/odoo-custom-field">
+  <meta name="twitter:title" content="Odoo : Add custom field">
+  <meta name="twitter:description" content="Create odoo custom module for add a field on certain odoo backend interface.">
+  <meta name="twitter:image" content="http://localhost:4000/assets/og-image.jpg">
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="http://localhost:4000/feed.xml" type="application/rss+xml" rel="alternate" title="Notes Last 10 blog posts" />
+
+  
+
+  
+    <link rel="stylesheet" href="/assets/dark.css">
+
+  
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="Notes">Notes</a>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" rel="noreferrer noopener" target="_blank" title="RSS">
+          <svg class="icon-rss"><use href="/assets/rss.svg#icon-rss" xlink:href="/assets/rss.svg#icon-rss"></use></svg>
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>Odoo : Add custom field</h1>
+            <p>Create odoo custom module for add a field on certain odoo backend interface.</p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                October 28, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  4 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/web">web</a>
+                
+                  <a href="/tag/odoo">odoo</a>
+                
+                  <a href="/tag/custom">custom</a>
+                
+                  <a href="/tag/module">module</a>
+                
+                  <a href="/tag/open source">open source</a>
+                
+                  <a href="/tag/python">python</a>
+                
+                  <a href="/tag/framework">framework</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>Before you develop anything make sure you enable <code class="highlighter-rouge">odoo developer mode</code> from setting menu top right corner choose about. About wizard will pop-up and then you click <code class="highlighter-rouge">activate developer mode</code> in the top right corner. Odoo Developer mode help you to get what name of view/object you want to inherit to use that name on your code.</p>
+
+<p><a href="/assets/post/odoofield/activatedevmode.png" data-rjs="/assets/post/odoofield/activatedevmode.png" class="fluidbox-trigger">
+  <img src="/assets/post/odoofield/activatedevmode.png" alt="odoo developer mode" />
+</a></p>
+
+<p>This tutorial will contain steps to create odoo custom field on product form view interface.</p>
+
+<h3 id="lets-create-the-module-">Lets create the module :</h3>
+
+<p>Every odoo custom module should have these 2 files :</p>
+<ol>
+  <li><code class="highlighter-rouge">__init__.py</code> file for call/import your python files from your module otherwise odoo wouldn’t load/read/detect your python files.</li>
+  <li><code class="highlighter-rouge">__openerp__.py</code> this file will contain your module desc and for call/import interface code such as xml, qweb, js etc.</li>
+</ol>
+
+<p>For add new custom field we will need a python files and a xml file. Python file will contain code for inherit odoo object to add new attribute(field) structurally. Xml file will contain code for inherit odoo view to show the field we just created on python file before.</p>
+
+<p>According to OCA (Odoo Community Association), here is odoo module hierarchy should look like :</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"># ODOO MODULE
+- __init__.py
+- __openerp__.py  
+- models
+  - __init__.py
+  - your_python_file.py
+- views
+  - your_xml_files.xml</code></pre></figure>
+
+<ul>
+  <li><code class="highlighter-rouge">/__init__.py</code>: import your subfolder that will contain python codes. in this case is models folder.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">models</span></code></pre></figure>
+
+<ul>
+  <li><code class="highlighter-rouge">/models/__init__.py</code>: <code class="highlighter-rouge">__init__.py</code> which is located inside models folder will use for load you python files like in the code below.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># import your python files without extension</span>
+<span class="kn">import</span> <span class="nn">your_python_file</span></code></pre></figure>
+
+<ul>
+  <li><code class="highlighter-rouge">__openerp__.py</code>: This file will contain your module desc and for call/import interface code such as xml, qweb, js etc. In this case your <code class="highlighter-rouge">__openerp__.py</code> should look like this :</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">{</span>
+    <span class="s">'name'</span><span class="p">:</span> <span class="s">'Custom Product field Module'</span><span class="p">,</span>
+    <span class="s">'version'</span><span class="p">:</span> <span class="s">'1.0'</span><span class="p">,</span>
+    <span class="s">'summary'</span><span class="p">:</span> <span class="s">'Custom Product Module. . . '</span><span class="p">,</span>
+    <span class="s">'description'</span><span class="p">:</span><span class="s">'''
+        add custom field on product form view
+    '''</span><span class="p">,</span>
+    <span class="s">'category'</span><span class="p">:</span> <span class="s">'Custom Products'</span><span class="p">,</span>
+    <span class="s">'author'</span><span class="p">:</span> <span class="s">'Akhmad Kresna'</span><span class="p">,</span>
+    <span class="s">'website'</span><span class="p">:</span> <span class="s">'http://www.yourwebsite.com'</span><span class="p">,</span>
+    <span class="s">'depends'</span><span class="p">:</span> <span class="p">[</span><span class="s">'product'</span><span class="p">],</span>
+    <span class="s">'data'</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s">'views/product_custom_view.xml'</span><span class="p">,</span>
+    <span class="p">],</span>
+
+<span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li><code class="highlighter-rouge">Your_python_file.py</code>: This file will contain code for inherit odoo object to add new attribute(field) structurally. So you will need object name of view you wanna add custom field. in this case we gonna add custom field on product form view.</li>
+</ul>
+
+<p><code class="highlighter-rouge">1.</code> go to product form view can be from Inventory/Inventory Control/Product.</p>
+
+<p><code class="highlighter-rouge">2.</code> use odoo developer mode to retrieve the name of current view object from edit form view menu.</p>
+
+<p><a href="/assets/post/odoofield/editformview.png" data-rjs="/assets/post/odoofield/editformview.png" class="fluidbox-trigger">
+  <img src="/assets/post/odoofield/editformview.png" alt="odoo formview" />
+</a></p>
+
+<p><code class="highlighter-rouge">3.</code> odoo edit form view wizard will popup. Wizard will contain information related to current form view such as its object and xml id.</p>
+
+<p><a href="/assets/post/odoofield/editformviewwizard.png" data-rjs="/assets/post/odoofield/editformviewwizard.png" class="fluidbox-trigger">
+  <img src="/assets/post/odoofield/editformviewwizard.png" alt="odoo formview" />
+</a></p>
+
+<p>NOW <code class="highlighter-rouge">your_python_file.PY</code> should look like this</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># import basic odoo library for creating object and field</span>
+<span class="kn">from</span> <span class="nn">openerp</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">api</span>
+
+<span class="c"># declare new object/class. "productTemplate" is a new name.</span>
+<span class="c"># you could name it as you want</span>
+<span class="k">class</span> <span class="nc">productTemplate</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+	<span class="c"># inherit odoo object where you want add a new field</span>
+    <span class="n">_inherit</span> <span class="o">=</span> <span class="s">'product.template'</span>
+
+    <span class="c"># declare your new field 'custom_field'</span>
+    <span class="c"># 'Custom field' as its label on the interface</span>
+    <span class="n">custom_field</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Char</span><span class="p">(</span><span class="s">'Custom field'</span><span class="p">)</span>
+    </code></pre></figure>
+
+<p>Until this point you technically add a custom field but it will not showed yet until we show it using xml code.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Your_xml_file.py</code> : After you add field on odoo object structure through python code, now we gonna show it on the product form view interface. first decide placement of your new field. I placed it below <code class="highlighter-rouge">barcode field</code>. So we will need technical name of <code class="highlighter-rouge">barcode field</code>. Hover to <code class="highlighter-rouge">barcode field</code> on odoo product form view and field information will show just like in the pic below. and for that to happen make sure you enable odoo developer mode.</li>
+</ul>
+
+<p><a href="/assets/post/odoofield/productformview.png" data-rjs="/assets/post/odoofield/productformview.png" class="fluidbox-trigger">
+  <img src="/assets/post/odoofield/productformview.png" alt="odoo form" />
+</a></p>
+
+<p>NOW <code class="highlighter-rouge">your_xml_file.xml</code> should look like this</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;openerp&gt;</span>
+    <span class="nt">&lt;data&gt;</span>
+    	<span class="c">&lt;!-- new id name for your new xml record with ir.ui.view model --&gt;</span>
+      <span class="nt">&lt;record</span> <span class="na">id=</span><span class="s">"view_product_form"</span> <span class="na">model=</span><span class="s">"ir.ui.view"</span><span class="nt">&gt;</span>
+      	<span class="c">&lt;!-- new name for your new view record --&gt;</span>
+		<span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;</span>product.form.inherit<span class="nt">&lt;/field&gt;</span>
+		<span class="c">&lt;!-- object of the view --&gt;</span>
+		<span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">"model"</span><span class="nt">&gt;</span>product.template<span class="nt">&lt;/field&gt;</span>
+		<span class="c">&lt;!-- inherit id is view name you want to inherit. we can get it from edit form view wizard like i showed above --&gt;</span>
+		<span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">"inherit_id"</span> <span class="na">ref=</span><span class="s">"product.product_template_only_form_view"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">"arch"</span> <span class="na">type=</span><span class="s">"xml"</span><span class="nt">&gt;</span>
+		<span class="c">&lt;!-- place your new custom after 'barcode' field --&gt;</span>
+		  <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">"barcode"</span> <span class="na">position=</span><span class="s">"after"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">"custom_field"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/field&gt;</span>
+        <span class="nt">&lt;/field&gt;</span>
+      <span class="nt">&lt;/record&gt;</span>
+    <span class="nt">&lt;/data&gt;</span>
+<span class="nt">&lt;/openerp&gt;</span>
+    </code></pre></figure>
+
+<p>And Thats it. Restart your odoo server, go to Apps menu, update app list, search install your new module.</p>
+
+<p><a href="https://github.com/akhmadkresna/odoo-custom-modules/tree/master/add_field">Download Source code here!</a></p>
+
+<p>If you have any questions about this article, just leave comment below</p>
+
+          </div>
+
+<!--
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Odoo+%3A+Add+custom+field - http://localhost:4000/posts/odoo-custom-field" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/posts/odoo-custom-field" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/posts/odoo-custom-field" title="Share on Google+" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 128 128"><path d="M40.7 55.9v16.1c0 0 15.6 0 22 0C59.2 82.5 53.8 88.2 40.7 88.2c-13.3 0-23.7-10.8-23.7-24.2s10.4-24.2 23.7-24.2c7.1 0 11.6 2.5 15.8 5.9 3.3-3.3 3.1-3.8 11.6-11.9 -7.2-6.6-16.8-10.6-27.4-10.6C18.2 23.3 0 41.5 0 64c0 22.5 18.2 40.7 40.7 40.7 33.6 0 41.8-29.3 39-48.8H40.7zM113.9 56.7V42.6h-10.1v14.1H89.4v10.1h14.5v14.5h10.1V66.8H128V56.7H113.9z"/></svg>
+            </a>
+          </div>
+-->
+
+          <div id="disqus_thread"></div>
+            <script type="text/javascript">
+              /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+              var disqus_shortname = 'akhmadkresna'; // required: replace example with your forum shortname
+              /* * * DON'T EDIT BELOW THIS LINE * * */
+              (function() {
+                  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+              })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </article>
+        <footer class="footer scrollappear">
+  <p>
+    Based on Chalk, high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+    
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-89954149-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</body>
+</html>
